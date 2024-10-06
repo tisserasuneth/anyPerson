@@ -1,7 +1,7 @@
 import amqp from 'amqplib';
 import logger from '../lib/logger';
 import JOBS from '../lib/jobs';
-import { uuid as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 const QUEUE_NAME = process.env.BASE_QUEUE_NAME || 'jobs';
 
