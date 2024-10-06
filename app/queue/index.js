@@ -38,11 +38,11 @@ const startConsumer = async () => {
 
         jobHandler(job.data).then(() => {
             logger.info(`Job with id ${job.id} completed`);
+            channel.ack(message);
         }).catch((err) => {
             logger.error(`Job with id ${job.id} failed: ${err.message}`);
+            channel.nack(message);
         });
-
-        channel.ack(message);
     });
 }
 
