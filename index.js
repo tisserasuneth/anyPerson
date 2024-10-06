@@ -25,4 +25,7 @@ await QUEUE.connectQueue().then(async () => {
 
 app.listen(PORT, () => {
     logger.info(`Server running on port ${PORT}`);
+}).on('error', (err) => {
+    logger.error(`Failed to start server: ${err.message}`);
+    process.exit(1);
 });
