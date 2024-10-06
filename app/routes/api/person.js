@@ -5,6 +5,6 @@ import Person from "../../controllers/person";
 const router = Router();
 const controller = new Person();
 
-router.post('/api/person', asyncMiddleware(controller.create));
+router.post('/person', asyncMiddleware(controller.create));
 
 export default router;
