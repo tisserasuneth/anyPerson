@@ -1,6 +1,7 @@
 import amqp from 'amqplib';
 import logger from '../lib/logger';
 import JOBS from '../lib/jobs';
+import { uuid as uuidv4 } from 'uuid';
 
 const QUEUE_NAME = process.env.BASE_QUEUE_NAME || 'jobs';
 
@@ -15,6 +16,21 @@ const connectQueue = async () => {
 
 const sendToQueue = async (job) => {
     await channel.sendToQueue(QUEUE_NAME, Buffer.from(JSON.stringify(job)), { persistent: true });
+}
+
+const createJob = (type, data, options = {}) => {
+
+    if (!type || !data) {
+        logger.error('Verify inputs for creating a job');
+        return;
+    }
+
+    return {
+        id: uuidv4(),
+        type,
+        data,
+        ...options,
+    };
 }
 
 const startConsumer = async () => {
@@ -50,4 +66,5 @@ export default {
     connectQueue,
     sendToQueue,
     startConsumer,
+    createJob,
 }
