@@ -1,7 +1,7 @@
 import express from 'express';
-import QUEUE from './app/queue';
-import logger from './app/lib/logger';
-import routes from './app/routes';
+import QUEUE from './app/queue/index.js';
+import logger from './app/lib/logger/index.js';
+import routes from './app/routes/index.js';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
