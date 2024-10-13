@@ -1,7 +1,7 @@
-import buildPerson from "./build-person";
+import buildPerson from "./build-person.js";
 
 const schemas = {
-    'build-person': buildPerson,
+    "BUILD_PERSON": buildPerson,
 }
 
 export default schemas;

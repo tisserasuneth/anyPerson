@@ -21,7 +21,7 @@ export default z.object({
         life_events: z.array(z.object({
             event: z.string(),
             date: z.string(),
-        })),         
+        })),
         goals: z.array(z.string()),
     }),
     image_description: z.string(),

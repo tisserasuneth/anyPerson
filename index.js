@@ -3,6 +3,10 @@ import QUEUE from './app/queue/index.js';
 import logger from './app/lib/logger/index.js';
 import routes from './app/routes/index.js';
 
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 const app = express();
 const PORT = process.env.PORT || 8080;
 

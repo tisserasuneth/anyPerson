@@ -1,6 +1,3 @@
-import schemas from "./schemas/index.js";
-import { zodResponseFormat } from "openai/helpers/zod";
-
 export function messageGenerator(systemPrompt, userMessage) {
     return [
         {
@@ -8,7 +5,7 @@ export function messageGenerator(systemPrompt, userMessage) {
             content: [
                 {
                     type: "text",
-                    text: systemPrompt,
+                    text: JSON.stringify(systemPrompt),
                 }
             ]
         },
@@ -17,13 +14,9 @@ export function messageGenerator(systemPrompt, userMessage) {
             content: [
                 {
                     type: "text",
-                    text: userMessage,
+                    text: JSON.stringify(userMessage),
                 }
             ]
         }
     ]
-};
-
-export function getResponseSchema(type) {
-    return zodResponseFormat(schemas[type]);
 };

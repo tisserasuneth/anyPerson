@@ -4,7 +4,7 @@ import OpenAIGPT from "./gpt/index.js";
 class ModelHandler {
     constructor() {
         this.models = {
-            OpenAIGPT: new OpenAIGPT(),
+            OpenAIGPT,
         };
     }
 
