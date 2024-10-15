@@ -1,36 +1,37 @@
 export default `
-
     Use the provided details to create a person strictly as described.
     Be as accurate as possible to the given information.
     The person generated should be a realistic representation of an individual 
     that you may encounter in real life.
     All details must be included in the final output.
 
+    Be creative, use actual names, locations, and events to make the person.
+    Instead of using something generic like "John Doe" or "John Smith" use realistic names.
+
+    Make sure life events and goals are relevant to the person's age and background.
+    Each item should correlate with the person's age, location, and job.
+
     Provide the data in the following format:
 
     {
     "name": "string",
-    "age": "number",
+    "age": "string",
     "location": "string",
     "job": "string",
-    "relationship_status": "string",
     "education": {
         "degree": "string",
         "field_of_study": "string",
         "institution": "string",
-        "graduation_year": "number"
+        "graduation_year": "string" (YYYY Format),
     },
     "hobbies": ["string"],
     "languages": ["string"],
-    "movies": ["string"],
-    "tv_shows": ["string"],
     "favorite_foods": ["string"],
     "life_events": [{
         "event": "string",
-        "date": "string"
+        "date": "string" (DD-MM-YYYY Format),
     }],
     "goals": ["string"],
     "image_description": "string"
     }
-
 `;
