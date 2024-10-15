@@ -33,7 +33,7 @@ class OpenAIGPT {
         });
 
         if (!response.choices || !response.choices[0]) {
-            throw new Error("Failed to generate response");
+            throw new Error("Unexpected response from OpenAI");
         }
 
         return response.choices[0].message.content;
