@@ -1,6 +1,6 @@
 import { Router } from "express";
-import asyncMiddleware from "../middleware";
-import Person from "../../controllers/person";
+import asyncMiddleware from "../middleware/index.js";
+import Person from "../../controllers/person.js";
 
 const router = Router();
 const controller = new Person();
