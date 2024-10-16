@@ -1,4 +1,5 @@
 import QUEUE from '../queue/index.js';
+import Character from '../models/character.js';
 
 class Person {
     async create(req, res) {
@@ -8,10 +9,12 @@ class Person {
             return res.status(400).json({ error: 'Missing required fields' });
         }
 
-        const job = QUEUE.createJob('BUILD_PERSON', { name, age, description });
+        let character = await Character.create({ name, age, description });
+
+        const job = QUEUE.createJob('BUILD_PERSON', character);
         await QUEUE.sendToQueue(job);
 
-        return res.status(202).json({ message: 'BUILD_PERSON job submitted' });
+        return res.status(202).json({ message: 'BUILD_PERSON job submitted', character: character.id });
     }
 }
 

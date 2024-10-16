@@ -20,18 +20,18 @@ export default `
     "job": "string",
     "education": {
         "degree": "string",
-        "field_of_study": "string",
+        "fieldOfStudy": "string",
         "institution": "string",
-        "graduation_year": "string" (YYYY Format),
+        "graduationYear": "string" (YYYY Format),
     },
     "hobbies": ["string"],
     "languages": ["string"],
-    "favorite_foods": ["string"],
-    "life_events": [{
+    "favoriteFoods": ["string"],
+    "lifeEvents": [{
         "event": "string",
         "date": "string" (DD-MM-YYYY Format),
     }],
     "goals": ["string"],
-    "image_description": "string"
+    "imageDescription": "string"
     }
 `;
