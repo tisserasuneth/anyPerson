@@ -1,10 +1,12 @@
 import MODELS from '../ai/models/index.js';
 import logger from '../logger/index.js';
+import Character from '../../models/character.js';
 
 const LLM = 'OpenAIGPT';
 const TYPE = 'BUILD_PERSON';
 
 async function buildPerson(data) {
+    let character;
     try {
         const MODEL_HANDLER = new MODELS();
         const MODEL_CLS = MODEL_HANDLER.getModel(LLM);
@@ -16,13 +18,31 @@ async function buildPerson(data) {
             TYPE,
         );
 
-        console.log(response);
+        const parsedResponse = JSON.parse(response);
+        const { features, imageDescription } = parsedResponse;
 
-        // Generate image
-        //Save to DB
+        character = await Character.findOne({ _id: data._id });
+        
+        if (!character) {
+            throw new Error('Character not found');
+        }
+
+        character.set({
+            ...features,
+            imageDescription,
+            metaData: { state: Character.STATES.COMPLETED },
+        });
+
+        await character.save();
+
     } catch (error) {
-        logger.error(error);
-        //Save error to DB
+        logger.error(`Error encountered while building character: ${error.message}`);
+    
+        if (character) {
+            character.metaData.state = Character.STATES.FAILED;
+            character.metaData.errors.push(error.message);
+            await character.save();
+        }
     }
 };
 
