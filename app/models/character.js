@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { error } from 'winston';
 
 const STATES = {
     INITIAL: 'INITIAL',
