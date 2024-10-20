@@ -63,6 +63,12 @@ const Character = new mongoose.Schema({
     imageDescription: {
         type: String,
     },
+    summary: {
+        type: String,
+    },
+    threadId: {
+        type: String,
+    },
     metaData: {
         state: {
             type: String,
