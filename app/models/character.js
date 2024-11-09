@@ -55,12 +55,19 @@ const Character = new mongoose.Schema({
         },
         date: {
             type: String,
-        }
+        },
+        _id: false,
     }],
     goals: {
         type: [String],
     },
     imageDescription: {
+        type: String,
+    },
+    summary: {
+        type: String,
+    },
+    assistant: {
         type: String,
     },
     metaData: {

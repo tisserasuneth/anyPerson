@@ -2,14 +2,12 @@ import MODELS from '../ai/models/index.js';
 import logger from '../logger/index.js';
 import Character from '../../models/character.js';
 
-const LLM = 'OpenAIGPT';
 const TYPE = 'BUILD_PERSON';
 
 async function buildPerson(data) {
     let character;
     try {
-        const MODEL_HANDLER = new MODELS();
-        const MODEL_CLS = MODEL_HANDLER.getModel(LLM);
+        const MODEL_CLS = MODELS.getModel(MODELS.MODEL_NAMES.OpenAIGPT);
         const MODEL = new MODEL_CLS();
 
         const response = await MODEL.generateResponse(
@@ -19,7 +17,7 @@ async function buildPerson(data) {
         );
 
         const parsedResponse = JSON.parse(response);
-        const { features, imageDescription } = parsedResponse;
+        const { features, imageDescription, summary } = parsedResponse;
 
         character = await Character.findOne({ _id: data._id });
         
@@ -30,6 +28,7 @@ async function buildPerson(data) {
         character.set({
             ...features,
             imageDescription,
+            summary,
             metaData: { state: Character.STATES.COMPLETED },
         });
 
