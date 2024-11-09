@@ -16,6 +16,11 @@ class ModelHandler {
     };
 
     static getModel(name) {
+
+        if (!ModelHandler.MODELS[name]) {
+            throw new Error(`Invalid model name: ${name}`);
+        }
+
         return ModelHandler.MODELS[name];
     }
 }
