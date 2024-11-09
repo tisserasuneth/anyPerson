@@ -14,8 +14,9 @@ class Person {
 
         const character = await Character.create({ name, age, description })
             .catch((err) => {
-                logger.error(`Error encountered while creating character: ${err}`);
-            return res.status(500).json({ error: err.message });
+                const errorMessage = `Error encountered while creating character`;
+                logger.error(`${errorMessage}: ${err}`);
+                return res.status(500).json({ error: errorMessage });
         });
 
         const job = QUEUE.createJob('BUILD_PERSON', character);
@@ -33,8 +34,9 @@ class Person {
 
         const character = await Character.findOne({ _id: characterId })
             .catch((err) => {
-                logger.error(`Error encountered while finding character: ${err}`);
-                return res.status(500).json({ error: err.message });
+                const errorMessage = `Error encountered while finding character`;
+                logger.error(`${errorMessage}: ${err}`);
+                return res.status(500).json({ error: errorMessage });
             });
 
         if (!character) {
@@ -46,16 +48,18 @@ class Person {
 
         const assistant = await MODEL.startChat(character)
             .catch((err) => {
-                logger.error(`Error encountered while starting chat for character ${character._id}: ${err}`);
-                return res.status(500).json({ error: err.message });
+                const errorMessage = `Error encountered while starting chat for character`;
+                logger.error(`${errorMessage} ${character._id}: ${err}`);
+                return res.status(500).json({ error: errorMessage });
             });
 
         character.assistant = assistant.id;
 
         await character.save()
             .catch((err) => {
-                logger.error(`Error encountered while saving character ${character._id}: ${err}`);
-                return res.status(500).json({ error: err.message });
+                const errorMessage = `Error encountered while saving character`;
+                logger.error(`${errorMessage} ${character._id}: ${err}`);
+                return res.status(500).json({ error: errorMessage });
             });
 
         return res.status(200).json({ message: 'Chat started', assistant: assistant.id });
@@ -70,8 +74,9 @@ class Person {
 
         const character = await Character.findOne({ _id: characterId })
             .catch((err) => {
-                logger.error(`Error encountered while finding character: ${err}`);
-                return res.status(500).json({ error: err.message });
+                const errorMessage = `Error encountered while finding character`;
+                logger.error(`${errorMessage}: ${err}`);
+                return res.status(500).json({ error: errorMessage });
             });
 
         if (!character) {
@@ -83,16 +88,18 @@ class Person {
 
         await MODEL.deleteChat(character)
             .catch((err) => {
-                logger.error(`Error encountered while deleting chat for character ${character._id}: ${err}`);
-                return res.status(500).json({ error: err.message });
+                const errorMessage = `Error encountered while deleting chat for character`;
+                logger.error(`${errorMessage} ${character._id}: ${err}`);
+                return res.status(500).json({ error: errorMessage });
             });
 
         character.assistant = null
 
         await character.save()
             .catch((err) => {
-                logger.error(`Error encountered while saving character ${character._id}: ${err}`);
-                return res.status(500).json({ error: err.message });
+                const errorMessage = `Error encountered while saving character`;
+                logger.error(`${errorMessage} ${character._id}: ${err}`);
+                return res.status(500).json({ error: errorMessage });
             });
 
         return res.status(200).json({ message: 'Chat deleted' });

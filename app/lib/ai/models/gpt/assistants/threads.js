@@ -45,10 +45,20 @@ class Threads {
     }
 
     async getThread() {
+
+        if (!this.threadId) {
+            throw new Error("Thread not found");
+        }
+
         return this.model.beta.threads.retrieve(this.threadId);
     }
 
     async deleteThread() {
+
+        if (!this.threadId) {
+            throw new Error("Thread not found");
+        }
+
         return this.model.beta.threads.del(this.threadId);
     }
 
