@@ -1,7 +1,7 @@
 import Chat from "../../controllers/chat.js";
 import logger from "../../lib/logger/index.js";
 
-const SOCKET_TIMEOUT = 15 * 60 * 1000;
+const SOCKET_TIMEOUT = 5 * 60 * 1000;
 
 function setTimer(socket) {
     if (socket.timeOutTimer) {
@@ -38,6 +38,7 @@ function handleSocket(webSocket) {
 
             socket.on(Chat.EVENTS.NEW_MESSAGE, async (message) => {
                 try {
+                    setTimer(socket);
                     const stream = await controller.handleMessage(socket, message);
 
                     stream.on('textDelta', async (delta) => {
