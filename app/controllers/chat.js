@@ -1,5 +1,4 @@
 import Character from "../models/character.js";
-import Assistants from "../lib/ai/models/gpt/assistants/index.js";
 import Threads from "../lib/ai/models/gpt/assistants/threads.js";
 
 class Chat {
