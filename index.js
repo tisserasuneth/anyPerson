@@ -4,18 +4,28 @@ import logger from './app/lib/logger/index.js';
 import routes from './app/routes/index.js';
 
 import mongoose from 'mongoose';
+import { createServer } from 'http';
+import { Server as WebSocketServer } from 'socket.io';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
 const app = express();
+const SERVER = createServer(app);
 const PORT = process.env.PORT || 8080;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017';
+
+const WSSERVER = new WebSocketServer(SERVER, {
+    cors: {
+        origin: '*' //TODO: Change this to the actual domain
+    },
+    path: '/chat'
+});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-routes(app);
+routes(app, WSSERVER);
 
 app.use((err, req, res, next) => {
     logger.error(err.stack);
@@ -37,7 +47,7 @@ QUEUE.connectQueue().then(async queue => {
     logger.error(`Failed to connect to Queue: ${err.message}`);
 });
 
-app.listen(PORT, () => {
+SERVER.listen(PORT, () => {
     logger.info(`Server running on port ${PORT}`);
 }).on('error', (err) => {
     logger.error(`Failed to start server: ${err.message}`);

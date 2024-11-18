@@ -32,7 +32,7 @@ class Person {
             return res.status(400).json({ error: 'Missing required fields' });
         }
 
-        const character = await Character.findOne({ _id: characterId })
+        const character = await Character.findById(characterId)
             .catch((err) => {
                 const errorMessage = `Error encountered while finding character`;
                 logger.error(`${errorMessage}: ${err}`);
@@ -72,7 +72,7 @@ class Person {
             return res.status(400).json({ error: 'Missing required fields' });
         }
 
-        const character = await Character.findOne({ _id: characterId })
+        const character = await Character.findById(characterId)
             .catch((err) => {
                 const errorMessage = `Error encountered while finding character`;
                 logger.error(`${errorMessage}: ${err}`);

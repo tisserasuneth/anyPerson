@@ -7,7 +7,9 @@ class Threads {
     }
 
     async createThread() {
-        this.threadId = this.model.beta.threads.create();
+        const { id } = await this.model.beta.threads.create();
+        this.threadId = id;
+        return id;
     }
 
     async createMessage(message) {
@@ -16,7 +18,7 @@ class Threads {
             throw new Error("Thread not found");
         }
 
-        return this.model.beta.messages.create(
+        return this.model.beta.threads.messages.create(
             this.threadId,
             {
                 role: "user",
@@ -35,13 +37,9 @@ class Threads {
             throw new Error("Assistant not found, please create an assistant first");
         }
 
-        return this.model.beta.runs.create(
-            this.threadId,
-            {
-                assistant_id: this.assistantId,
-                stream: true,
-            }
-        );
+        return this.model.beta.threads.runs.stream(this.threadId,
+            { assistant_id: this.assistantId }
+        )
     }
 
     async getThread() {

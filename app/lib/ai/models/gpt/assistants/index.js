@@ -1,6 +1,6 @@
 import OpenAI from "openai";
 
-class Assistant {
+class Assistants {
     constructor() {
         this.model = new OpenAI();
     }
@@ -32,4 +32,4 @@ class Assistant {
     }
 }
 
-export default Assistant;
+export default Assistants;
