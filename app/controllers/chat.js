@@ -6,7 +6,6 @@ class Chat {
     constructor() {
         this.threads = null;
         this.character = null;
-        this.createdThread = null;
     }
 
     static EVENTS = {
@@ -31,7 +30,11 @@ class Chat {
         }
 
         this.threads = new Threads(this.character.assistant);
-        this.createdThread = this.threads.createThread()
+
+        return this.threads.createThread()
+            .catch((err) => {
+                throw new Error(`Error encountered while creating thread: ${err.message || err}`);
+            });
     }
 
     async handleMessage(message) {
