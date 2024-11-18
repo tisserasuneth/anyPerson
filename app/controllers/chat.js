@@ -11,14 +11,17 @@ class Chat {
 
     static EVENTS = {
         NEW_MESSAGE: 'new_message',
+        SYSTEM_MESSAGE_CHUNK: 'system_message_chunk',
+        SYSTEM_MESSAGE_END: 'system_message_end',
         MESSAGE_END: 'message_end',
         DISCONNECT: 'disconnect',
         ERROR: 'error',
     }
 
     async initialize(socket) {
+        const { characterId } = socket?.handshake?.query;
 
-        this.character = await Character.findOne({ _id: socket.characterId })
+        this.character = await Character.findById(characterId)
             .catch((err) => {
                 throw new Error(`Error encountered while finding character: ${err.message || err}`);
             });

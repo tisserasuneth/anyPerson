@@ -18,7 +18,8 @@ const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017';
 const WSSERVER = new WebSocketServer(SERVER, {
     cors: {
         origin: '*' //TODO: Change this to the actual domain
-    }
+    },
+    path: '/chat'
 });
 
 app.use(express.json());

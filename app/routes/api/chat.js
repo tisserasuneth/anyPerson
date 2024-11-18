@@ -36,17 +36,18 @@ function handleSocket(webSocket) {
             const controller = new Chat();
             initializeSocket(socket, controller);
 
-            socket.on(Chat.EVENTS.NEW_MESSAGE, async (message) => {
+            socket.on(Chat.EVENTS.NEW_MESSAGE, async event => {
                 try {
                     setTimer(socket);
-                    const stream = await controller.handleMessage(socket, message);
+                    const { message } = event;
+                    const stream = await controller.handleMessage(message);
 
-                    stream.on('textDelta', async (delta) => {
-                        await socket.emit(Chat.EVENTS.NEW_MESSAGE, delta.value);
+                    stream.on('textDelta', async delta => {
+                        await socket.emit(Chat.EVENTS.SYSTEM_MESSAGE_CHUNK, delta.value);
                     });
 
-                    stream.on('textDone', async (delta) => {
-                        await socket.emit(Chat.EVENTS.MESSAGE_END);
+                    stream.on('textDone', async delta => {
+                        await socket.emit(Chat.EVENTS.SYSTEM_MESSAGE_END);
                     });
 
                 } catch (error) {

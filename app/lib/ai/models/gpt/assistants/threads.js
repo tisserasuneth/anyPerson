@@ -7,7 +7,9 @@ class Threads {
     }
 
     async createThread() {
-        this.threadId = await this.model.beta.threads.create();
+        const { id } = await this.model.beta.threads.create();
+        this.threadId = id;
+        return id;
     }
 
     async createMessage(message) {
