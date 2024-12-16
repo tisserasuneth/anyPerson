@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import QUEUE from './app/queue/index.js';
 import logger from './app/lib/logger/index.js';
 import routes from './app/routes/index.js';
@@ -21,6 +22,12 @@ const WSSERVER = new WebSocketServer(SERVER, {
     },
     path: '/chat'
 });
+
+app.use(cors({
+    origin: '*', //TODO: Change this to the actual domain
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
