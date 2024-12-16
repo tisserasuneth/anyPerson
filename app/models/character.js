@@ -12,13 +12,16 @@ const Character = new mongoose.Schema({
         type: String,
         required: true
     },
-    age: {
-        type: String,
-        required: true
-    },
     description: {
         type: String,
-        required: true
+        required: true,
+    },
+    personalize: {
+        type: String,
+        required: true,
+    },
+    age: {
+        type: String,
     },
     location: {
         type: String,
@@ -90,8 +93,8 @@ Character.statics = {
     create(data) {
         const character = new this({
             name: data.name,
-            age: data.age,
             description: data.description,
+            personalize: data.personalize,
             metaData: {
                 state: STATES.INITIAL,
                 errors: [],

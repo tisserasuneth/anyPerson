@@ -64,10 +64,6 @@ class OpenAIGPT {
     async deleteChat(person) {
         const { assistant } = person;
 
-        if (!assistant) {
-            throw new Error("Assistant not found");
-        }
-
         return this.assistant.deleteAssistant(assistant)
             .catch((err) => {
                 const ERROR = `Error encountered while deleting assistant`;

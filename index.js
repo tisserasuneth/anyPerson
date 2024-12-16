@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import QUEUE from './app/queue/index.js';
 import logger from './app/lib/logger/index.js';
 import routes from './app/routes/index.js';
@@ -15,13 +16,21 @@ const SERVER = createServer(app);
 const PORT = process.env.PORT || 8080;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017';
 
+const corsOptions = {
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: [
+        'Content-Type',
+        'Authorization',
+    ]
+}
+
 const WSSERVER = new WebSocketServer(SERVER, {
-    cors: {
-        origin: '*' //TODO: Change this to the actual domain
-    },
+    cors: corsOptions,
     path: '/chat'
 });
 
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
