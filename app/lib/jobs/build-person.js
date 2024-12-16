@@ -7,6 +7,17 @@ const TYPE = 'BUILD_PERSON';
 async function buildPerson(data) {
     let character;
     try {
+
+        character = await Character.findOne({ _id: data._id });
+
+        if (!character) {
+            throw new Error('Character not found');
+        }
+
+        character.metaData.state = Character.STATES.PROCESSING;
+        await character.save();
+
+
         const MODEL_CLS = MODELS.getModel(MODELS.MODEL_NAMES.OpenAIGPT);
         const MODEL = new MODEL_CLS();
 
@@ -19,18 +30,21 @@ async function buildPerson(data) {
         const parsedResponse = JSON.parse(response);
         const { features, imageDescription, summary } = parsedResponse;
 
-        character = await Character.findOne({ _id: data._id });
-        
-        if (!character) {
-            throw new Error('Character not found');
-        }
-
         character.set({
             ...features,
             imageDescription,
             summary,
             metaData: { state: Character.STATES.COMPLETED },
         });
+
+        const assistant = await MODEL.startChat(character)
+            .catch((err) => {
+                const errorMessage = `Error encountered while starting chat for character`;
+                logger.error(`${errorMessage} ${character._id}: ${err}`);
+                return res.status(500).json({ error: errorMessage });
+            });
+
+        character.assistant = assistant.id;
 
         await character.save();
 
