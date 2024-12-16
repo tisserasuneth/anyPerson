@@ -8,7 +8,7 @@ class Person {
     async create(req, res) {
         const { name, description, personalize } = req.body;
 
-        if (!name || !description, !personalize) {
+        if (!name || !description || !personalize) {
             return res.status(400).json({ error: 'Missing required fields' });
         }
 

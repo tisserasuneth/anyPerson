@@ -14,11 +14,11 @@ const Character = new mongoose.Schema({
     },
     description: {
         type: String,
-        required: true
+        required: true,
     },
     personalize: {
         type: String,
-        required: true
+        required: true,
     },
     age: {
         type: String,

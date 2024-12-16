@@ -14,6 +14,7 @@ async function buildPerson(data) {
             throw new Error('Character not found');
         }
 
+        character.metaData = character.metaData || {};
         character.metaData.state = Character.STATES.PROCESSING;
         await character.save();
 
