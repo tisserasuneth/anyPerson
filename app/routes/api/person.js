@@ -6,7 +6,7 @@ const router = Router();
 const controller = new Person();
 
 router.post('/person', asyncMiddleware(controller.create));
-router.post('/person/:id/chat', asyncMiddleware(controller.startChat));
-router.delete('/person/:id/chat', asyncMiddleware(controller.deleteChat));
+router.get('/person/:id', asyncMiddleware(controller.getCharacterById));
+router.delete('/person/:id', asyncMiddleware(controller.delete));
 
 export default router;
