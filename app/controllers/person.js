@@ -6,13 +6,13 @@ import logger from '../lib/logger/index.js';
 
 class Person {
     async create(req, res) {
-        const { name, age, description } = req.body;
+        const { name, description, personalize } = req.body;
 
-        if (!name || !age || !description) {
+        if (!name || !description, !personalize) {
             return res.status(400).json({ error: 'Missing required fields' });
         }
 
-        const character = await Character.create({ name, age, description })
+        const character = await Character.create({ name, description, personalize })
             .catch((err) => {
                 const errorMessage = `Error encountered while creating character`;
                 logger.error(`${errorMessage}: ${err}`);
@@ -25,7 +25,7 @@ class Person {
         return res.status(202).json({ message: 'BUILD_PERSON job submitted', character: character._id });
     }
 
-    async startChat(req, res) {
+    async getCharacterById(req, res) {
         const { id: characterId } = req.params;
 
         if (!characterId) {
@@ -43,29 +43,10 @@ class Person {
             return res.status(404).json({ error: 'Character not found' });
         }
 
-        const MODEL_CLS = MODELS.getModel(MODELS.MODEL_NAMES.OpenAIGPT);
-        const MODEL = new MODEL_CLS();
-
-        const assistant = await MODEL.startChat(character)
-            .catch((err) => {
-                const errorMessage = `Error encountered while starting chat for character`;
-                logger.error(`${errorMessage} ${character._id}: ${err}`);
-                return res.status(500).json({ error: errorMessage });
-            });
-
-        character.assistant = assistant.id;
-
-        await character.save()
-            .catch((err) => {
-                const errorMessage = `Error encountered while saving character`;
-                logger.error(`${errorMessage} ${character._id}: ${err}`);
-                return res.status(500).json({ error: errorMessage });
-            });
-
-        return res.status(200).json({ message: 'Chat started', assistant: assistant.id });
+        return res.status(200).json(character);
     }
 
-    async deleteChat(req, res) {
+    async delete(req, res) {
         const { id: characterId } = req.params;
 
         if (!characterId) {
@@ -93,16 +74,9 @@ class Person {
                 return res.status(500).json({ error: errorMessage });
             });
 
-        character.assistant = null
+        await Character.deleteOne({ _id: characterId })
 
-        await character.save()
-            .catch((err) => {
-                const errorMessage = `Error encountered while saving character`;
-                logger.error(`${errorMessage} ${character._id}: ${err}`);
-                return res.status(500).json({ error: errorMessage });
-            });
-
-        return res.status(200).json({ message: 'Chat deleted' });
+        return res.status(200).json({ message: 'Character has been deleted' });
     }
 }
 
