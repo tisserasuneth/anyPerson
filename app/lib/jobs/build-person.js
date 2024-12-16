@@ -38,11 +38,6 @@ async function buildPerson(data) {
         });
 
         const assistant = await MODEL.startChat(character)
-            .catch((err) => {
-                const errorMessage = `Error encountered while starting chat for character`;
-                logger.error(`${errorMessage} ${character._id}: ${err}`);
-                return res.status(500).json({ error: errorMessage });
-            });
 
         character.assistant = assistant.id;
 
