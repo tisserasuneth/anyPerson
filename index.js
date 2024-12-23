@@ -14,7 +14,7 @@ dotenv.config();
 const app = express();
 const SERVER = createServer(app);
 const PORT = process.env.PORT || 8080;
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017';
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/talkative-ai';
 
 const corsOptions = {
     origin: '*',

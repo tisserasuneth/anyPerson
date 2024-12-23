@@ -4,12 +4,13 @@ import JOBS from '../lib/jobs/index.js';
 import { v4 as uuidv4 } from 'uuid';
 
 const QUEUE_NAME = process.env.BASE_QUEUE_NAME || 'JOBS';
+const RABBITMQ_URL = process.env.RABBITMQ_URI;
 
 let connection;
 let channel;
 
 const connectQueue = async () => {
-    connection = await amqp.connect('amqp://localhost');
+    connection = await amqp.connect(RABBITMQ_URL);
     channel = await connection.createChannel();
     return channel.assertQueue(QUEUE_NAME, { durable: true });
 }
