@@ -37,7 +37,7 @@ async function buildPerson(data) {
 
         let image = '';
         if (predictions) {
-            image = predictions[0].bytesBase64Encoded;
+            image = predictions[0]?.bytesBase64Encoded;
         }
 
         const characterData = {
