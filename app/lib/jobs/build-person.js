@@ -33,7 +33,9 @@ async function buildPerson(data) {
         const parsedResponse = JSON.parse(response);
         const { features, imageDescription, summary } = parsedResponse;
 
-        const predictions = await IMAGEN_MODEL.generate({ prompt: imageDescription });
+        const predictions = await IMAGEN_MODEL.generate({ prompt: imageDescription }).catch(error => {
+            logger.error(`Error encountered while generating image: ${error.message} for character: ${character._id}`);
+        })
 
         let image = '';
         if (predictions) {
@@ -43,7 +45,7 @@ async function buildPerson(data) {
         const characterData = {
             ...features,
             imageDescription,
-            image: `data:image/png;base64,${image}`,
+            image: image ? `data:image/png;base64,${image}` : '',
             summary,
             metaData: { state: Character.STATES.COMPLETED },
         };
