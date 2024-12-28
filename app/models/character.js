@@ -67,6 +67,9 @@ const Character = new mongoose.Schema({
     imageDescription: {
         type: String,
     },
+    image: {
+        type: String,
+    },
     summary: {
         type: String,
     },
