@@ -6,10 +6,8 @@ import Threads from "./assistants/threads.js";
 
 import buildPersonPrompt from "./prompts/build-person.js";
 import assistantPrompt from "./prompts/assistant.js";
-import characterImagePrompt from "./prompts/character-image.js";
 
 import buildPersonSchema from "./schemas/build-person.js";
-import characterImageSchema from "./schemas/character-image.js";
 
 import logger from "../../../logger/index.js";
 import { messageGenerator } from "./utils.js";
@@ -26,12 +24,10 @@ class OpenAIGPT {
     static PROMPTS = {
         BUILD_PERSON: buildPersonPrompt,
         ASSISTANT: assistantPrompt,
-        CHARACTER_IMAGE: characterImagePrompt,
     };
 
     static SCHEMAS = {
         BUILD_PERSON: buildPersonSchema,
-        CHARACTER_IMAGE: characterImageSchema,
     };
 
     async generate(systemPrompt, userPrompt, schema) {
