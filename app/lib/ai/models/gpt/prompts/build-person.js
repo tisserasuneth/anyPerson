@@ -12,5 +12,8 @@ export default `
     Make sure life events and goals are relevant to the person's age and background.
     Each item should correlate with the person's age, location, and job.
 
+    For the image description, it should describe the character exactly as provided in the context and should be in the structure provided below.
+    Make it as conscise as possible while maintaining the essence. Example: "a person in their :age:, street photography, canon."
+
     For the summary, build a detailed and creative description for the person in a 100 words or less.
 `;

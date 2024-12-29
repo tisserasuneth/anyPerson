@@ -30,7 +30,7 @@ class OpenAIGPT {
         BUILD_PERSON: buildPersonSchema,
     };
 
-    async generateResponse(systemPrompt, userPrompt, schema) {
+    async generate(systemPrompt, userPrompt, schema) {
         const messages = messageGenerator(systemPrompt, userPrompt);
 
         const response = await this.model.chat.completions.create({

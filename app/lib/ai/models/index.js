@@ -1,8 +1,10 @@
 // Import models
 import OpenAIGPT from "./gpt/index.js";
+import VertexAI from "./vertex-ai/index.js";
 
 const MODEL_NAMES = {
     "OpenAIGPT": "OpenAIGPT",
+    "VertexAI": "VertexAI",
 }
 
 class ModelHandler {
@@ -13,6 +15,7 @@ class ModelHandler {
 
     static MODELS = {
         [MODEL_NAMES.OpenAIGPT]: OpenAIGPT,
+        [MODEL_NAMES.VertexAI]: VertexAI,
     };
 
     static getModel(name) {
