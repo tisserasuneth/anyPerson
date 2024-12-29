@@ -12,66 +12,25 @@ const Character = new mongoose.Schema({
         type: String,
         required: true
     },
-    description: {
-        type: String,
-        required: true,
-    },
-    personalize: {
-        type: String,
-        required: true,
-    },
     age: {
         type: String,
     },
     location: {
         type: String,
     },
-    job: {
-        type: String,
-    },
-    education: {
-        degree: {
-            type: String,
-        },
-        fieldOfStudy: {
-            type: String,
-        },
-        institution: {
-            type: String,
-        },
-        graduationYear: {
-            type: String,
-        }
-    },
-    hobbies: {
-        type: [String],
-    },
-    languages: {
-        type: [String],
-    },
-    favoriteFoods: {
-        type: [String],
-    },
-    lifeEvents: [{
-        event: {
-            type: String,
-        },
-        date: {
-            type: String,
-        },
-        _id: false,
-    }],
-    goals: {
-        type: [String],
-    },
-    imageDescription: {
-        type: String,
-    },
-    image: {
-        type: String,
-    },
     summary: {
         type: String,
+    },
+    description: {
+        type: String,
+        required: true,
+    },
+    tone: {
+        type: String,
+        required: true,
+    },
+    image: {
+        type: Object,
     },
     assistant: {
         type: String,
@@ -97,7 +56,7 @@ Character.statics = {
         const character = new this({
             name: data.name,
             description: data.description,
-            personalize: data.personalize,
+            tone: data.tone,
             metaData: {
                 state: STATES.INITIAL,
                 errors: [],

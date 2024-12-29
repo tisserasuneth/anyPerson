@@ -31,7 +31,13 @@ async function buildPerson(data) {
         );
 
         const parsedResponse = JSON.parse(response);
-        const { features, imageDescription, summary } = parsedResponse;
+        const { 
+            name,
+            age,
+            location,
+            imageDescription,
+            summary 
+        } = parsedResponse;
 
         const predictions = await IMAGEN_MODEL.generate({ prompt: imageDescription }).catch(error => {
             logger.error(`Error encountered while generating image: ${error.message} for character: ${character._id}`);
@@ -43,19 +49,27 @@ async function buildPerson(data) {
         }
 
         const characterData = {
-            ...features,
-            imageDescription,
-            image: image ? `data:image/png;base64,${image}` : '',
+            name,
+            age,
+            location,
+            image: {
+                description: imageDescription,
+                link: image ? `data:image/png;base64,${image}` : '',
+            },
             summary,
             metaData: { state: Character.STATES.COMPLETED },
         };
 
-        character.set(characterData);
-        delete characterData.image;
-
-        let characterForAssistant = { 
-            ...characterData,
+        const characterForAssistant = {
+            name,
+            age,
+            location,
+            summary,
+            description: character.description,
+            tone: character.tone,
         }
+
+        character.set(characterData);
 
         const assistant = await GPT_MODEL.startChat(characterForAssistant);
 
