@@ -63,7 +63,7 @@ class Person {
                 return res.status(404).json({ error: 'Character not found' });
             }
 
-            const { link } = character?.image;
+            const link = character?.image?.link;
 
             if (!link) {
                 return res.status(404).json({ error: 'Character image not found' });
