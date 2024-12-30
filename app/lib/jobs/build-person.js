@@ -26,7 +26,7 @@ async function buildPerson(data) {
     
         const response = await GPT_MODEL.generate(
             GPT_MODEL_CLS.PROMPTS[BUILD_PERSON_TYPE],
-            data,
+            { name: character.name, description: character.description },
             BUILD_PERSON_TYPE,
         );
 
